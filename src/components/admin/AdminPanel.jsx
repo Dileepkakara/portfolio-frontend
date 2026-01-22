@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react'
+import API_BASE_URL from '../../config/api'
 import FormBuilder from './FormBuilder'
 
 const AdminPanel = ({ token }) => {
@@ -19,7 +20,7 @@ const AdminPanel = ({ token }) => {
   // Fetch functions
   const fetchProjects = async () => {
     try {
-      const response = await fetch('\\\/api/projects')
+      const response = await fetch(`${API_BASE_URL}/api/projects`)
       const data = await response.json()
       setProjects(data)
     } catch (error) {
@@ -29,7 +30,7 @@ const AdminPanel = ({ token }) => {
 
   const fetchSkills = async () => {
     try {
-      const response = await fetch('\\\/api/skills')
+      const response = await fetch(`${API_BASE_URL}/api/skills`)
       const data = await response.json()
       setSkills(data)
     } catch (error) {
@@ -39,7 +40,7 @@ const AdminPanel = ({ token }) => {
 
   const fetchAbout = async () => {
     try {
-      const response = await fetch('\\\/api/about')
+      const response = await fetch(`${API_BASE_URL}/api/about`)
       const data = await response.json()
       setAbout(data)
     } catch (error) {
@@ -49,7 +50,7 @@ const AdminPanel = ({ token }) => {
 
   const fetchMessages = async () => {
     try {
-      const response = await fetch('\\\/api/messages', {
+      const response = await fetch(`${API_BASE_URL}/api/messages`, {
         headers: { 'Authorization': `Bearer ${token}` }
       })
       const data = await response.json()
@@ -64,8 +65,8 @@ const AdminPanel = ({ token }) => {
     try {
       const authToken = tokenParam || token
       const url = editId
-        ? `\\\/api/projects/${editId}`
-        : '\\\/api/projects'
+        ? `${API_BASE_URL}/api/projects/${editId}`
+        : `${API_BASE_URL}/api/projects`
       
       const method = editId ? 'PUT' : 'POST'
       
@@ -103,7 +104,7 @@ const AdminPanel = ({ token }) => {
     
     try {
       const authToken = tokenParam || token
-      const response = await fetch(`\\\/api/projects/${id}`, {
+      const response = await fetch(`${API_BASE_URL}/api/projects/${id}`, {
         method: 'DELETE',
         headers: { 'Authorization': `Bearer ${authToken}` }
       })
@@ -124,8 +125,8 @@ const AdminPanel = ({ token }) => {
     try {
       const authToken = tokenParam || token
       const url = editId
-        ? `\\\/api/skills/${editId}`
-        : '\\\/api/skills'
+        ? `${API_BASE_URL}/api/skills/${editId}`
+        : `${API_BASE_URL}/api/skills`
       
       const method = editId ? 'PUT' : 'POST'
       
@@ -154,7 +155,7 @@ const AdminPanel = ({ token }) => {
     
     try {
       const authToken = tokenParam || token
-      const response = await fetch(`\\\/api/skills/${id}`, {
+      const response = await fetch(`${API_BASE_URL}/api/skills/${id}`, {
         method: 'DELETE',
         headers: { 'Authorization': `Bearer ${authToken}` }
       })
@@ -174,7 +175,7 @@ const AdminPanel = ({ token }) => {
   const handleAboutSubmit = async (formData, editId, tokenParam) => {
     try {
       const authToken = tokenParam || token
-      const response = await fetch('\\\/api/about', {
+      const response = await fetch(`${API_BASE_URL}/api/about`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -201,7 +202,7 @@ const AdminPanel = ({ token }) => {
     
     try {
       const authToken = tokenParam || token
-      const response = await fetch(`\\\/api/messages/${id}`, {
+      const response = await fetch(`${API_BASE_URL}/api/messages/${id}`, {
         method: 'DELETE',
         headers: { 'Authorization': `Bearer ${authToken}` }
       })
