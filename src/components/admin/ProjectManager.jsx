@@ -21,19 +21,19 @@ const ProjectManager = ({ token }) => {
 
   const fetchProjects = async () => {
     try {
-      // Use hardcoded URL directly
-      const url = 'https://portfolio-backend-ilcl.onrender.com/api/projects';
-      console.log('Fetching from hardcoded URL:', url);
+      const url = `${API_BASE_URL}/api/projects`;
+      console.log('Fetching projects from:', url);
       
       const response = await fetch(url);
       if (!response.ok) {
         throw new Error(`HTTP ${response.status}: ${response.statusText}`);
       }
       const data = await response.json();
-      console.log('Projects fetched successfully:', data);
+      console.log('Projects fetched successfully');
       setProjects(data);
     } catch (error) {
       console.error('Error fetching projects:', error);
+      alert('Failed to fetch projects: ' + error.message);
     }
   }
 
@@ -46,13 +46,20 @@ const ProjectManager = ({ token }) => {
   }
 
   const handleSubmit = async (e) => {
-    e.preventDefault()
+    e.preventDefault();
     try {
       const url = isEditing
         ? `${API_BASE_URL}/api/projects/${editId}`
-        : `${API_BASE_URL}/api/projects`
+        : `${API_BASE_URL}/api/projects`;
       
-      const method = isEditing ? 'PUT' : 'POST'
+      const method = isEditing ? 'PUT' : 'POST';
+      const payload = {
+        ...formData,
+        tags: formData.tags.split(',').map(t => t.trim())
+      };
+      
+      console.log('Saving project to:', url);
+      console.log('Payload:', payload);
       
       const response = await fetch(url, {
         method,
@@ -60,13 +67,16 @@ const ProjectManager = ({ token }) => {
           'Content-Type': 'application/json',
           'Authorization': `Bearer ${token}`
         },
-        body: JSON.stringify({
-          ...formData,
-          tags: formData.tags.split(',').map(t => t.trim())
-        })
-      })
+        body: JSON.stringify(payload)
+      });
 
-      if (!response.ok) throw new Error('Failed to save project')
+      if (!response.ok) {
+        const errorText = await response.text();
+        throw new Error(`HTTP ${response.status}: ${errorText}`);
+      }
+      
+      const result = await response.json();
+      console.log('Project saved successfully:', result);
       
       setFormData({
         title: '',
@@ -75,12 +85,14 @@ const ProjectManager = ({ token }) => {
         tags: '',
         liveLink: '',
         githubLink: ''
-      })
-      setIsEditing(false)
-      setEditId(null)
-      fetchProjects()
+      });
+      setIsEditing(false);
+      setEditId(null);
+      alert('Project saved successfully!');
+      fetchProjects();
     } catch (error) {
-      console.error('Error saving project:', error)
+      console.error('Error saving project:', error);
+      alert('Failed to save project: ' + error.message);
     }
   }
 
