@@ -247,10 +247,11 @@ const AdminPanel = ({ token }) => {
   ]
 
   const aboutFields = [
-    { name: 'text', label: 'About Text', placeholder: 'Write your bio...', type: 'textarea', required: true, rows: 6 },
+    { name: 'profilePhoto', label: 'Profile Photo URL', placeholder: 'https://example.com/photo.jpg', type: 'url', required: false },
     { name: 'dateOfBirth', label: 'Date of Birth', placeholder: 'DD/MM/YYYY', required: false },
     { name: 'phone', label: 'Phone Number', placeholder: '+91 XXXXXXXXXX', required: false },
     { name: 'location', label: 'Location', placeholder: 'City, Country', required: false },
+    { name: 'text', label: 'About Text', placeholder: 'Write your bio...', type: 'textarea', required: false, rows: 4 },
     { name: 'education', label: 'Education', placeholder: 'B-Tech in Computer Science...', type: 'textarea', required: false, rows: 3 },
     { name: 'cvLink', label: 'CV Download Link', placeholder: 'https://drive.google.com/...', type: 'url', required: false }
   ]
@@ -362,6 +363,23 @@ const AdminPanel = ({ token }) => {
                 <h4>Personal Details</h4>
               </div>
               
+              {/* Profile Photo */}
+              {about.profilePhoto && (
+                <div style={{ marginBottom: '1.5rem', textAlign: 'center' }}>
+                  <img 
+                    src={about.profilePhoto} 
+                    alt="Profile" 
+                    style={{ 
+                      maxWidth: '200px', 
+                      width: '100%', 
+                      maxHeight: '200px',
+                      borderRadius: '0.8rem',
+                      border: '2px solid rgba(99, 102, 241, 0.3)'
+                    }} 
+                  />
+                </div>
+              )}
+
               {/* Personal Details */}
               <div style={{ display: 'grid', gap: '1rem', marginBottom: '1.5rem' }}>
                 {about.dateOfBirth && (

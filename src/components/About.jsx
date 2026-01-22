@@ -23,6 +23,22 @@ const About = () => {
     fetchAbout()
   }, [])
 
+  // Default demo data
+  const defaultProfilePhoto = 'https://res.cloudinary.com/dpzgo1w9j/image/upload/v1740667299/1740230734075_jbkbcn.jpg'
+  const defaultDateOfBirth = '20/09/2003'
+  const defaultPhone = '+91 9182681959'
+  const defaultLocation = 'Visakhapatnam, India'
+  const defaultEducation = 'B-Tech in Computer Science Engineering'
+  const defaultCvLink = 'https://drive.google.com/file/d/1ragQaArB1p3j89GW3oqwuCVv9izXOZWI/view?usp=drivesdk'
+
+  const profilePhoto = about?.profilePhoto || defaultProfilePhoto
+  const dateOfBirth = about?.dateOfBirth || defaultDateOfBirth
+  const phone = about?.phone || defaultPhone
+  const location = about?.location || defaultLocation
+  const education = about?.education || defaultEducation
+  const cvLink = about?.cvLink || defaultCvLink
+  const bioText = about?.text
+
   return (
     <section id="about">
       <div className="section-container">
@@ -33,25 +49,25 @@ const About = () => {
         <div className="about-content">
           <div className="about-image fade-left">
             <div className="profile-image-container float">
-              <img src="https://res.cloudinary.com/dpzgo1w9j/image/upload/v1740667299/1740230734075_jbkbcn.jpg" alt="Dileep Kakara" />
+              <img src={profilePhoto} alt="Dileep Kakara" />
             </div>
           </div>
           <div className="about-text fade-left" style={{animationDelay: '0.2s'}}>
             {loading ? (
               <p>Loading about section...</p>
-            ) : about ? (
+            ) : bioText ? (
               <div className="personal-details-container fade-left" style={{animationDelay: '0.3s'}}>
                 <h3>Bio</h3>
-                <p>{about.text}</p>
+                <p>{bioText}</p>
               </div>
             ) : (
               <div className="personal-details-container fade-left" style={{animationDelay: '0.3s'}}>
                 <h3>Personal Details</h3>
                 <div className="personal-details">
-                  <p><i className="fas fa-birthday-cake"></i> <strong>Date of Birth:</strong> 20/09/2003</p>
-                  <p><i className="fas fa-phone"></i> <strong>Phone:</strong> +91 9182681959</p>
-                  <p><i className="fas fa-map-marker-alt"></i> <strong>Location:</strong> Visakhapatnam, India</p>
-                  <p><i className="fas fa-graduation-cap"></i> <strong>Education:</strong> B-Tech in Computer Science Engineering</p>
+                  <p><i className="fas fa-birthday-cake"></i> <strong>Date of Birth:</strong> {dateOfBirth}</p>
+                  <p><i className="fas fa-phone"></i> <strong>Phone:</strong> {phone}</p>
+                  <p><i className="fas fa-map-marker-alt"></i> <strong>Location:</strong> {location}</p>
+                  <p><i className="fas fa-graduation-cap"></i> <strong>Education:</strong> {education}</p>
                 </div>
               </div>
             )}
@@ -82,7 +98,7 @@ const About = () => {
               </div>
             </div>
 
-            <a href="https://drive.google.com/file/d/1ragQaArB1p3j89GW3oqwuCVv9izXOZWI/view?usp=drivesdk" className="btn btn-primary fade-left" style={{marginTop: '2rem', animationDelay: '0.5s'}}>
+            <a href={cvLink} className="btn btn-primary fade-left" style={{marginTop: '2rem', animationDelay: '0.5s'}}>
               <i className="fas fa-download"></i> Download CV
             </a>
           </div>

@@ -127,6 +127,26 @@ const FormBuilder = ({
                 />
               )}
               {field.hint && <small className="field-hint">{field.hint}</small>}
+              
+              {/* Image Preview for profilePhoto and image fields */}
+              {(field.name === 'profilePhoto' || field.name === 'image') && formData[field.name] && (
+                <div style={{ marginTop: '0.8rem', textAlign: 'center' }}>
+                  <img 
+                    src={formData[field.name]} 
+                    alt="Preview" 
+                    style={{ 
+                      maxWidth: '150px', 
+                      maxHeight: '150px',
+                      borderRadius: '0.5rem',
+                      border: '1px solid rgba(99, 102, 241, 0.3)'
+                    }} 
+                    onError={(e) => {
+                      e.target.src = 'https://via.placeholder.com/150?text=Invalid+URL'
+                    }}
+                  />
+                  <p style={{ fontSize: '0.85rem', color: 'var(--text-light)', marginTop: '0.5rem' }}>Preview</p>
+                </div>
+              )}
             </div>
           ))}
           
