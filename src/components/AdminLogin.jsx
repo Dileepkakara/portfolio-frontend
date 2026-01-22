@@ -64,25 +64,3 @@ const AdminLogin = ({ onLoginSuccess }) => {
 }
 
 export default AdminLogin
-            />
-          </div>
-          <button type="submit" className="btn btn-primary">
-            {isRegister ? 'Register' : 'Login'}
-          </button>
-          <button 
-            type="button" 
-            className="btn btn-outline"
-            onClick={() => {
-              setIsRegister(!isRegister)
-              setError('')
-            }}
-          >
-            {isRegister ? 'Already have an account? Login' : 'Need an account? Register'}
-          </button>
-        </form>
-      </div>
-    </div>
-  )
-}
-
-export default AdminLogin
