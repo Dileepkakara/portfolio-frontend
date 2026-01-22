@@ -15,6 +15,7 @@ const ProjectManager = ({ token }) => {
   const [editId, setEditId] = useState(null)
 
   useEffect(() => {
+    console.log('ProjectManager - API_BASE_URL:', API_BASE_URL);
     fetchProjects()
   }, [])
 
