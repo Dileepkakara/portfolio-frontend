@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react'
+import API_BASE_URL from './config/api'
 import Navigation from './components/Navigation'
 import Hero from './components/Hero'
 import About from './components/About'
@@ -12,6 +13,12 @@ import './App.css'
 
 function App() {
   const [showAdmin, setShowAdmin] = useState(false)
+
+  // Debug: Log API_BASE_URL on mount
+  useEffect(() => {
+    console.log('🔗 App mounted - API_BASE_URL:', API_BASE_URL);
+    window.API_BASE_URL = API_BASE_URL; // Make it globally available
+  }, [])
 
   // Check if admin page is requested
   useEffect(() => {
