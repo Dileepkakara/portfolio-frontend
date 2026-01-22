@@ -9,7 +9,7 @@ const AdminLogin = ({ onLoginSuccess }) => {
   const handleLogin = async (e) => {
     e.preventDefault()
     try {
-      const response = await fetch('http://localhost:5000/api/auth/login', {
+      const response = await fetch(`${API_BASE_URL}/api/auth/login`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email, password })
@@ -28,7 +28,7 @@ const AdminLogin = ({ onLoginSuccess }) => {
   const handleRegister = async (e) => {
     e.preventDefault()
     try {
-      const response = await fetch('http://localhost:5000/api/auth/register', {
+      const response = await fetch(`${API_BASE_URL}/api/auth/register`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email, password })

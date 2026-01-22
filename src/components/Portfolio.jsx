@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react'
+import { API_BASE_URL } from '../config/api'
 
 const Portfolio = () => {
     const [projects, setProjects] = useState([])
@@ -40,7 +41,7 @@ const Portfolio = () => {
     useEffect(() => {
         const fetchProjects = async () => {
             try {
-                const response = await fetch('http://localhost:5000/api/projects')
+                const response = await fetch(`${API_BASE_URL}/api/projects`)
                 const data = await response.json()
                 // Show database data if available, otherwise show default
                 setProjects(data && data.length > 0 ? data : defaultProjects)

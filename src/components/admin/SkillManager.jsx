@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react'
+import { API_BASE_URL } from '../../config/api'
 
 const SkillManager = ({ token }) => {
   const [skills, setSkills] = useState([])
@@ -15,7 +16,7 @@ const SkillManager = ({ token }) => {
 
   const fetchSkills = async () => {
     try {
-      const response = await fetch('http://localhost:5000/api/skills')
+      const response = await fetch('\\\/api/skills')
       const data = await response.json()
       setSkills(data)
     } catch (error) {
@@ -35,8 +36,8 @@ const SkillManager = ({ token }) => {
     e.preventDefault()
     try {
       const url = isEditing
-        ? `http://localhost:5000/api/skills/${editId}`
-        : 'http://localhost:5000/api/skills'
+        ? `\\\/api/skills/${editId}`
+        : '\\\/api/skills'
       
       const method = isEditing ? 'PUT' : 'POST'
       
@@ -73,7 +74,7 @@ const SkillManager = ({ token }) => {
     if (!window.confirm('Delete this skill?')) return
     
     try {
-      const response = await fetch(`http://localhost:5000/api/skills/${id}`, {
+      const response = await fetch(`\\\/api/skills/${id}`, {
         method: 'DELETE',
         headers: { 'Authorization': `Bearer ${token}` }
       })

@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react'
+import { API_BASE_URL } from '../../config/api'
 
 const MessageViewer = ({ token }) => {
   const [messages, setMessages] = useState([])
@@ -9,7 +10,7 @@ const MessageViewer = ({ token }) => {
 
   const fetchMessages = async () => {
     try {
-      const response = await fetch('http://localhost:5000/api/messages', {
+      const response = await fetch(`${API_BASE_URL}/api/messages`, {
         headers: { 'Authorization': `Bearer ${token}` }
       })
       const data = await response.json()
@@ -23,7 +24,7 @@ const MessageViewer = ({ token }) => {
     if (!window.confirm('Delete this message?')) return
     
     try {
-      const response = await fetch(`http://localhost:5000/api/messages/${id}`, {
+      const response = await fetch(`\\\/api/messages/${id}`, {
         method: 'DELETE',
         headers: { 'Authorization': `Bearer ${token}` }
       })

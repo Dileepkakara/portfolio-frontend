@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react'
+import { API_BASE_URL } from '../../config/api'
 
 const ProjectManager = ({ token }) => {
   const [projects, setProjects] = useState([])
@@ -19,7 +20,7 @@ const ProjectManager = ({ token }) => {
 
   const fetchProjects = async () => {
     try {
-      const response = await fetch('http://localhost:5000/api/projects')
+      const response = await fetch('\\\/api/projects')
       const data = await response.json()
       setProjects(data)
     } catch (error) {
@@ -39,8 +40,8 @@ const ProjectManager = ({ token }) => {
     e.preventDefault()
     try {
       const url = isEditing
-        ? `http://localhost:5000/api/projects/${editId}`
-        : 'http://localhost:5000/api/projects'
+        ? `\\\/api/projects/${editId}`
+        : '\\\/api/projects'
       
       const method = isEditing ? 'PUT' : 'POST'
       
@@ -91,7 +92,7 @@ const ProjectManager = ({ token }) => {
     if (!window.confirm('Delete this project?')) return
     
     try {
-      const response = await fetch(`http://localhost:5000/api/projects/${id}`, {
+      const response = await fetch(`\\\/api/projects/${id}`, {
         method: 'DELETE',
         headers: { 'Authorization': `Bearer ${token}` }
       })

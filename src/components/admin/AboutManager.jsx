@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react'
+import { API_BASE_URL } from '../../config/api'
 
 const AboutManager = ({ token }) => {
   const [about, setAbout] = useState({})
@@ -11,7 +12,7 @@ const AboutManager = ({ token }) => {
 
   const fetchAbout = async () => {
     try {
-      const response = await fetch('http://localhost:5000/api/about')
+      const response = await fetch(`${API_BASE_URL}/api/about`)
       const data = await response.json()
       if (data) {
         setAbout(data)
@@ -25,7 +26,7 @@ const AboutManager = ({ token }) => {
   const handleSubmit = async (e) => {
     e.preventDefault()
     try {
-      const response = await fetch('http://localhost:5000/api/about', {
+      const response = await fetch(`${API_BASE_URL}/api/about`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',

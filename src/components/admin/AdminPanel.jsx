@@ -19,7 +19,7 @@ const AdminPanel = ({ token }) => {
   // Fetch functions
   const fetchProjects = async () => {
     try {
-      const response = await fetch('http://localhost:5000/api/projects')
+      const response = await fetch('\\\/api/projects')
       const data = await response.json()
       setProjects(data)
     } catch (error) {
@@ -29,7 +29,7 @@ const AdminPanel = ({ token }) => {
 
   const fetchSkills = async () => {
     try {
-      const response = await fetch('http://localhost:5000/api/skills')
+      const response = await fetch('\\\/api/skills')
       const data = await response.json()
       setSkills(data)
     } catch (error) {
@@ -39,7 +39,7 @@ const AdminPanel = ({ token }) => {
 
   const fetchAbout = async () => {
     try {
-      const response = await fetch('http://localhost:5000/api/about')
+      const response = await fetch('\\\/api/about')
       const data = await response.json()
       setAbout(data)
     } catch (error) {
@@ -49,7 +49,7 @@ const AdminPanel = ({ token }) => {
 
   const fetchMessages = async () => {
     try {
-      const response = await fetch('http://localhost:5000/api/messages', {
+      const response = await fetch('\\\/api/messages', {
         headers: { 'Authorization': `Bearer ${token}` }
       })
       const data = await response.json()
@@ -64,8 +64,8 @@ const AdminPanel = ({ token }) => {
     try {
       const authToken = tokenParam || token
       const url = editId
-        ? `http://localhost:5000/api/projects/${editId}`
-        : 'http://localhost:5000/api/projects'
+        ? `\\\/api/projects/${editId}`
+        : '\\\/api/projects'
       
       const method = editId ? 'PUT' : 'POST'
       
@@ -103,7 +103,7 @@ const AdminPanel = ({ token }) => {
     
     try {
       const authToken = tokenParam || token
-      const response = await fetch(`http://localhost:5000/api/projects/${id}`, {
+      const response = await fetch(`\\\/api/projects/${id}`, {
         method: 'DELETE',
         headers: { 'Authorization': `Bearer ${authToken}` }
       })
@@ -124,8 +124,8 @@ const AdminPanel = ({ token }) => {
     try {
       const authToken = tokenParam || token
       const url = editId
-        ? `http://localhost:5000/api/skills/${editId}`
-        : 'http://localhost:5000/api/skills'
+        ? `\\\/api/skills/${editId}`
+        : '\\\/api/skills'
       
       const method = editId ? 'PUT' : 'POST'
       
@@ -154,7 +154,7 @@ const AdminPanel = ({ token }) => {
     
     try {
       const authToken = tokenParam || token
-      const response = await fetch(`http://localhost:5000/api/skills/${id}`, {
+      const response = await fetch(`\\\/api/skills/${id}`, {
         method: 'DELETE',
         headers: { 'Authorization': `Bearer ${authToken}` }
       })
@@ -174,7 +174,7 @@ const AdminPanel = ({ token }) => {
   const handleAboutSubmit = async (formData, editId, tokenParam) => {
     try {
       const authToken = tokenParam || token
-      const response = await fetch('http://localhost:5000/api/about', {
+      const response = await fetch('\\\/api/about', {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -201,7 +201,7 @@ const AdminPanel = ({ token }) => {
     
     try {
       const authToken = tokenParam || token
-      const response = await fetch(`http://localhost:5000/api/messages/${id}`, {
+      const response = await fetch(`\\\/api/messages/${id}`, {
         method: 'DELETE',
         headers: { 'Authorization': `Bearer ${authToken}` }
       })
