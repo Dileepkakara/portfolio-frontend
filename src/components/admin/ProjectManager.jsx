@@ -21,24 +21,19 @@ const ProjectManager = ({ token }) => {
 
   const fetchProjects = async () => {
     try {
-      // Test with hardcoded URL first
-      const testUrl = 'https://portfolio-backend-ilcl.onrender.com/api/projects';
-      const url = `${API_BASE_URL}/api/projects`;
-      console.log('API_BASE_URL value:', API_BASE_URL);
-      console.log('Fetching from (constructed):', url);
-      console.log('Fetching from (hardcoded):', testUrl);
-      console.log('Are they equal?', url === testUrl);
+      // Use hardcoded URL directly
+      const url = 'https://portfolio-backend-ilcl.onrender.com/api/projects';
+      console.log('Fetching from hardcoded URL:', url);
       
       const response = await fetch(url);
       if (!response.ok) {
         throw new Error(`HTTP ${response.status}: ${response.statusText}`);
       }
       const data = await response.json();
+      console.log('Projects fetched successfully:', data);
       setProjects(data);
     } catch (error) {
       console.error('Error fetching projects:', error);
-      console.error('API_BASE_URL is:', API_BASE_URL);
-      console.error('typeof API_BASE_URL:', typeof API_BASE_URL);
     }
   }
 
