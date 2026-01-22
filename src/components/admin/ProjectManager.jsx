@@ -21,11 +21,18 @@ const ProjectManager = ({ token }) => {
 
   const fetchProjects = async () => {
     try {
-      const response = await fetch(`${API_BASE_URL}/api/projects`)
-      const data = await response.json()
-      setProjects(data)
+      const url = `${API_BASE_URL}/api/projects`;
+      console.log('Fetching from:', url);
+      const response = await fetch(url);
+      if (!response.ok) {
+        throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+      }
+      const data = await response.json();
+      setProjects(data);
     } catch (error) {
-      console.error('Error fetching projects:', error)
+      console.error('Error fetching projects:', error);
+      console.error('API_BASE_URL is:', API_BASE_URL);
+      console.error('typeof API_BASE_URL:', typeof API_BASE_URL);
     }
   }
 
