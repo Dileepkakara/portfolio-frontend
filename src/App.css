@@ -630,6 +630,25 @@ body.light-mode .skill-name {
     transition: all 0.3s ease;
     display: flex;
     flex-direction: column;
+    position: relative;
+}
+
+.project-number-badge {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: linear-gradient(90deg, var(--primary), var(--secondary));
+    color: white;
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    font-size: 1.1rem;
+    z-index: 10;
+    box-shadow: 0 3px 10px rgba(99, 102, 241, 0.3);
 }
 
 .project-card:hover {
@@ -2107,5 +2126,87 @@ body.light-mode .project-detail h3 {
 
 body.light-mode .project-detail p {
     color: var(--text-dark);
+}
+
+/* Portfolio Project Counter */
+.portfolio-project-counter {
+    margin-bottom: 2rem;
+    max-width: 1200px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.project-numbers {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    justify-content: center;
+    padding: 1.5rem;
+    background: rgba(99, 102, 241, 0.05);
+    border: 1px solid rgba(99, 102, 241, 0.2);
+    border-radius: 0.8rem;
+}
+
+.project-number-item {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem 1rem;
+    background: var(--card-bg);
+    border: 1px solid rgba(99, 102, 241, 0.3);
+    border-radius: 0.5rem;
+    transition: all 0.3s ease;
+}
+
+.project-number-item:hover {
+    background: rgba(99, 102, 241, 0.1);
+    border-color: var(--primary);
+    transform: translateY(-2px);
+}
+
+.project-number {
+    background: linear-gradient(90deg, var(--primary), var(--secondary));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    font-weight: bold;
+    font-size: 1.1rem;
+    min-width: 30px;
+    text-align: center;
+}
+
+.project-name {
+    color: var(--text-light);
+    font-size: 0.9rem;
+    font-weight: 500;
+    max-width: 150px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+body.light-mode .project-name {
+    color: var(--text-dark);
+}
+
+body.light-mode .project-number-item {
+    background: rgba(0, 0, 0, 0.05);
+    border-color: rgba(0, 0, 0, 0.1);
+}
+
+body.light-mode .project-number-item:hover {
+    background: rgba(0, 0, 0, 0.1);
+    border-color: var(--secondary);
+}
+
+@media (max-width: 768px) {
+    .project-numbers {
+        gap: 0.5rem;
+        flex-wrap: wrap;
+    }
+
+    .project-name {
+        max-width: 100px;
+    }
 }
 
