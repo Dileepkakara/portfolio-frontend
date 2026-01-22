@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import API_BASE_URL from '../config/api'
 
 const Contact = () => {
   const [formData, setFormData] = useState({
@@ -7,6 +8,9 @@ const Contact = () => {
     phone: '',
     message: ''
   })
+  const [loading, setLoading] = useState(false)
+  const [successMessage, setSuccessMessage] = useState('')
+  const [errorMessage, setErrorMessage] = useState('')
 
   const handleChange = (e) => {
     const { id, value } = e.target
@@ -16,10 +20,33 @@ const Contact = () => {
     }))
   }
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault()
-    alert(`Thank you, ${formData.name}! Your message has been sent. I'll get back to you soon at ${formData.email}.`)
-    setFormData({ name: '', email: '', phone: '', message: '' })
+    setLoading(true)
+    setSuccessMessage('')
+    setErrorMessage('')
+
+    try {
+      const response = await fetch(`${API_BASE_URL}/api/messages`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(formData)
+      })
+
+      if (!response.ok) throw new Error('Failed to send message')
+
+      const data = await response.json()
+      setSuccessMessage(`Thank you, ${formData.name}! Your message has been sent successfully. I'll get back to you soon at ${formData.email}.`)
+      setFormData({ name: '', email: '', phone: '', message: '' })
+      
+      // Clear success message after 5 seconds
+      setTimeout(() => setSuccessMessage(''), 5000)
+    } catch (error) {
+      setErrorMessage('Failed to send message. Please try again.')
+      console.error('Error:', error)
+    } finally {
+      setLoading(false)
+    }
   }
 
   return (
@@ -33,25 +60,27 @@ const Contact = () => {
         <div className="contact-container">
           <div className="contact-form fade-left">
             <h3>Send Me a Message</h3>
+            {successMessage && <div className="success-message" style={{background: '#d4edda', color: '#155724', padding: '12px', borderRadius: '4px', marginBottom: '1rem'}}>{successMessage}</div>}
+            {errorMessage && <div className="error-message" style={{background: '#f8d7da', color: '#721c24', padding: '12px', borderRadius: '4px', marginBottom: '1rem'}}>{errorMessage}</div>}
             <form id="contactForm" onSubmit={handleSubmit}>
               <div className="form-group">
                 <i className="fas fa-user"></i>
-                <input type="text" className="form-control" id="name" placeholder="Your Name" value={formData.name} onChange={handleChange} required />
+                <input type="text" className="form-control" id="name" placeholder="Your Name" value={formData.name} onChange={handleChange} required disabled={loading} />
               </div>
               <div className="form-group">
                 <i className="fas fa-envelope"></i>
-                <input type="email" className="form-control" id="email" placeholder="Your Email" value={formData.email} onChange={handleChange} required />
+                <input type="email" className="form-control" id="email" placeholder="Your Email" value={formData.email} onChange={handleChange} required disabled={loading} />
               </div>
               <div className="form-group">
                 <i className="fas fa-phone"></i>
-                <input type="tel" className="form-control" id="phone" placeholder="Your Phone (optional)" value={formData.phone} onChange={handleChange} />
+                <input type="tel" className="form-control" id="phone" placeholder="Your Phone (optional)" value={formData.phone} onChange={handleChange} disabled={loading} />
               </div>
               <div className="form-group">
                 <i className="fas fa-comment"></i>
-                <textarea className="form-control" id="message" placeholder="Your Message" value={formData.message} onChange={handleChange} required></textarea>
+                <textarea className="form-control" id="message" placeholder="Your Message" value={formData.message} onChange={handleChange} required disabled={loading}></textarea>
               </div>
-              <button type="submit" className="btn btn-primary" style={{width: '100%'}}>
-                <i className="fas fa-paper-plane"></i> Send Message
+              <button type="submit" className="btn btn-primary" style={{width: '100%'}} disabled={loading}>
+                <i className="fas fa-paper-plane"></i> {loading ? 'Sending...' : 'Send Message'}
               </button>
             </form>
           </div>
