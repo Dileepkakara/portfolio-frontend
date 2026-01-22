@@ -24,7 +24,7 @@ const MessageViewer = ({ token }) => {
     if (!window.confirm('Delete this message?')) return
     
     try {
-      const response = await fetch(`\\\/api/messages/${id}`, {
+      const response = await fetch(`${API_BASE_URL}/api/messages/${id}`, {
         method: 'DELETE',
         headers: { 'Authorization': `Bearer ${token}` }
       })

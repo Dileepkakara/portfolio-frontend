@@ -20,7 +20,7 @@ const ProjectManager = ({ token }) => {
 
   const fetchProjects = async () => {
     try {
-      const response = await fetch('\\\/api/projects')
+      const response = await fetch(`${API_BASE_URL}/api/projects`)
       const data = await response.json()
       setProjects(data)
     } catch (error) {
@@ -40,8 +40,8 @@ const ProjectManager = ({ token }) => {
     e.preventDefault()
     try {
       const url = isEditing
-        ? `\\\/api/projects/${editId}`
-        : '\\\/api/projects'
+        ? `${API_BASE_URL}/api/projects/${editId}`
+        : `${API_BASE_URL}/api/projects`
       
       const method = isEditing ? 'PUT' : 'POST'
       
@@ -92,7 +92,7 @@ const ProjectManager = ({ token }) => {
     if (!window.confirm('Delete this project?')) return
     
     try {
-      const response = await fetch(`\\\/api/projects/${id}`, {
+      const response = await fetch(`${API_BASE_URL}/api/projects/${id}`, {
         method: 'DELETE',
         headers: { 'Authorization': `Bearer ${token}` }
       })

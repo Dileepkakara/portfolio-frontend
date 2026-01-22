@@ -16,7 +16,7 @@ const SkillManager = ({ token }) => {
 
   const fetchSkills = async () => {
     try {
-      const response = await fetch('\\\/api/skills')
+      const response = await fetch(`${API_BASE_URL}/api/skills`)
       const data = await response.json()
       setSkills(data)
     } catch (error) {
@@ -36,8 +36,8 @@ const SkillManager = ({ token }) => {
     e.preventDefault()
     try {
       const url = isEditing
-        ? `\\\/api/skills/${editId}`
-        : '\\\/api/skills'
+        ? `${API_BASE_URL}/api/skills/${editId}`
+        : `${API_BASE_URL}/api/skills`
       
       const method = isEditing ? 'PUT' : 'POST'
       
@@ -74,7 +74,7 @@ const SkillManager = ({ token }) => {
     if (!window.confirm('Delete this skill?')) return
     
     try {
-      const response = await fetch(`\\\/api/skills/${id}`, {
+      const response = await fetch(`${API_BASE_URL}/api/skills/${id}`, {
         method: 'DELETE',
         headers: { 'Authorization': `Bearer ${token}` }
       })
