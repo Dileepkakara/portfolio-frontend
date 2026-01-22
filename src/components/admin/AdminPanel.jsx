@@ -247,7 +247,12 @@ const AdminPanel = ({ token }) => {
   ]
 
   const aboutFields = [
-    { name: 'text', label: 'About Text', placeholder: 'Write your bio...', type: 'textarea', required: true, rows: 6 }
+    { name: 'text', label: 'About Text', placeholder: 'Write your bio...', type: 'textarea', required: true, rows: 6 },
+    { name: 'dateOfBirth', label: 'Date of Birth', placeholder: 'DD/MM/YYYY', required: false },
+    { name: 'phone', label: 'Phone Number', placeholder: '+91 XXXXXXXXXX', required: false },
+    { name: 'location', label: 'Location', placeholder: 'City, Country', required: false },
+    { name: 'education', label: 'Education', placeholder: 'B-Tech in Computer Science...', type: 'textarea', required: false, rows: 3 },
+    { name: 'cvLink', label: 'CV Download Link', placeholder: 'https://drive.google.com/...', type: 'url', required: false }
   ]
 
   return (
@@ -354,13 +359,67 @@ const AdminPanel = ({ token }) => {
           {about && (
             <div className="about-display">
               <div className="about-header">
-                <h4>Current About Text</h4>
-                <span className="about-stats">
-                  Words: {about.text?.split(/\s+/).length || 0} | 
-                  Characters: {about.text?.length || 0}
-                </span>
+                <h4>Personal Details</h4>
               </div>
-              <p className="about-content">{about.text}</p>
+              
+              {/* Personal Details */}
+              <div style={{ display: 'grid', gap: '1rem', marginBottom: '1.5rem' }}>
+                {about.dateOfBirth && (
+                  <div className="detail-item">
+                    <strong style={{ color: 'var(--primary)' }}>📅 Date of Birth:</strong>
+                    <p>{about.dateOfBirth}</p>
+                  </div>
+                )}
+                {about.phone && (
+                  <div className="detail-item">
+                    <strong style={{ color: 'var(--primary)' }}>📱 Phone:</strong>
+                    <p>{about.phone}</p>
+                  </div>
+                )}
+                {about.location && (
+                  <div className="detail-item">
+                    <strong style={{ color: 'var(--primary)' }}>📍 Location:</strong>
+                    <p>{about.location}</p>
+                  </div>
+                )}
+              </div>
+
+              {/* About Bio */}
+              {about.text && (
+                <div style={{ marginBottom: '1.5rem', paddingBottom: '1.5rem', borderBottom: '1px solid rgba(99, 102, 241, 0.2)' }}>
+                  <h4 style={{ color: 'var(--primary)', marginBottom: '0.8rem' }}>👤 Bio</h4>
+                  <p className="about-content">{about.text}</p>
+                  <span className="about-stats" style={{ marginTop: '0.8rem' }}>
+                    Words: {about.text?.split(/\s+/).length || 0} | 
+                    Characters: {about.text?.length || 0}
+                  </span>
+                </div>
+              )}
+
+              {/* Education */}
+              {about.education && (
+                <div style={{ marginBottom: '1.5rem', paddingBottom: '1.5rem', borderBottom: '1px solid rgba(99, 102, 241, 0.2)' }}>
+                  <h4 style={{ color: 'var(--primary)', marginBottom: '0.8rem' }}>🎓 Education</h4>
+                  <p className="about-content">{about.education}</p>
+                </div>
+              )}
+
+              {/* CV Download Link */}
+              {about.cvLink && (
+                <div style={{ marginBottom: '1.5rem' }}>
+                  <h4 style={{ color: 'var(--primary)', marginBottom: '0.8rem' }}>📄 CV</h4>
+                  <a 
+                    href={about.cvLink} 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    className="btn btn-primary"
+                    style={{ display: 'inline-block' }}
+                  >
+                    <i className="fas fa-download"></i> Download CV
+                  </a>
+                </div>
+              )}
+
               <div className="about-meta">
                 <small>✏️ Last updated: {new Date(about.updatedAt).toLocaleString()}</small>
               </div>
@@ -369,25 +428,19 @@ const AdminPanel = ({ token }) => {
 
           {!about && (
             <div className="empty-message">
-              📭 No about text added yet. Click "Edit About" to add one.
+              📭 No about details added yet. Add your personal information below.
             </div>
           )}
 
-          {/* Edit Button */}
-          <div className="form-actions" style={{ marginTop: '1.5rem' }}>
-            <button 
-              onClick={() => {
-                const newText = prompt('Enter your about text:', about?.text || '')
-                if (newText !== null && newText.trim() !== '') {
-                  handleAboutSubmit({ text: newText })
-                }
-              }}
-              className="btn btn-primary"
-              style={{ flex: 1 }}
-            >
-              ✏️ Edit About Text
-            </button>
-          </div>
+          {/* Edit Form */}
+          <FormBuilder 
+            title="About"
+            fields={aboutFields}
+            onSubmit={handleAboutSubmit}
+            items={about ? [about] : []}
+            editorMode={true}
+            token={token}
+          />
         </div>
       )}
 

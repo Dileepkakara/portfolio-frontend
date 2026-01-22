@@ -8,7 +8,8 @@ const FormBuilder = ({
   items, 
   onEdit, 
   onDelete, 
-  token 
+  token,
+  editorMode = false
 }) => {
   const [formData, setFormData] = useState(
     fields.reduce((acc, field) => {
@@ -73,26 +74,29 @@ const FormBuilder = ({
 
   return (
     <div className="admin-manager">
-      <div className="manager-header">
-        <h3>{title}</h3>
-        <button 
-          onClick={handleAddClick}
-          className="btn btn-primary"
-        >
-          + Add {title}
-        </button>
-      </div>
+      {!editorMode && (
+        <div className="manager-header">
+          <h3>{title}</h3>
+          <button 
+            onClick={handleAddClick}
+            className="btn btn-primary"
+          >
+            + Add {title}
+          </button>
+        </div>
+      )}
 
-      {/* Field Requirements Info */}
-      <div className="field-info">
-        <strong>Required Fields:</strong>
-        {fields.map((field, idx) => (
-          <span key={idx} className="field-badge">
-            {field.required && <span className="required-star">*</span>}
-            {field.label}
-          </span>
-        ))}
-      </div>
+      {!editorMode && (
+        <div className="field-info">
+          <strong>Required Fields:</strong>
+          {fields.map((field, idx) => (
+            <span key={idx} className="field-badge">
+              {field.required && <span className="required-star">*</span>}
+              {field.label}
+            </span>
+          ))}
+        </div>
+      )}
 
       {/* Form */}
       {isFormOpen && (
@@ -142,59 +146,88 @@ const FormBuilder = ({
       )}
 
       {/* Items List */}
-      <div className="admin-list">
-        {items.length === 0 ? (
-          <p className="empty-message">No {title.toLowerCase()} added yet</p>
-        ) : (
-          items.map(item => (
-            <div key={item._id} className="admin-item">
-              <div className="item-content">
-                {fields.map(field => (
-                  <div key={field.name} className="item-field">
-                    <strong>{field.label}:</strong>
-                    {field.type === 'textarea' || field.name === 'description' || field.name === 'text' ? (
-                      <p>{item[field.name]}</p>
-                    ) : field.name === 'icon' ? (
-                      <i className={item[field.name]}></i>
-                    ) : field.name === 'tags' && Array.isArray(item[field.name]) ? (
-                      <div className="tag-list">
-                        {item[field.name].map((tag, idx) => (
-                          <span key={idx} className="tag">{tag}</span>
-                        ))}
-                      </div>
-                    ) : field.name === 'image' ? (
-                      <img src={item[field.name]} alt="preview" className="item-image-preview" />
-                    ) : (
-                      <span>{item[field.name]}</span>
-                    )}
-                  </div>
-                ))}
+      {!editorMode && (
+        <div className="admin-list">
+          {items.length === 0 ? (
+            <p className="empty-message">No {title.toLowerCase()} added yet</p>
+          ) : (
+            items.map(item => (
+              <div key={item._id} className="admin-item">
+                <div className="item-content">
+                  {fields.map(field => (
+                    <div key={field.name} className="item-field">
+                      <strong>{field.label}:</strong>
+                      {field.type === 'textarea' || field.name === 'description' || field.name === 'text' ? (
+                        <p>{item[field.name]}</p>
+                      ) : field.name === 'icon' ? (
+                        <i className={item[field.name]}></i>
+                      ) : field.name === 'tags' && Array.isArray(item[field.name]) ? (
+                        <div className="tag-list">
+                          {item[field.name].map((tag, idx) => (
+                            <span key={idx} className="tag">{tag}</span>
+                          ))}
+                        </div>
+                      ) : field.name === 'image' ? (
+                        <img src={item[field.name]} alt="preview" className="item-image-preview" />
+                      ) : (
+                        <span>{item[field.name]}</span>
+                      )}
+                    </div>
+                  ))}
+                </div>
+                <div className="admin-actions">
+                  <button 
+                    onClick={() => setExpandedItem(item)}
+                    className="btn-view"
+                    title="View full details"
+                  >
+                    👁️ View
+                  </button>
+                  <button 
+                    onClick={() => handleEditClick(item)}
+                    className="btn-edit"
+                  >
+                    ✏️ Edit
+                  </button>
+                  <button 
+                    onClick={() => onDelete(item._id, token)}
+                    className="btn-delete"
+                  >
+                    🗑️ Delete
+                  </button>
+                </div>
               </div>
-              <div className="admin-actions">
-                <button 
-                  onClick={() => setExpandedItem(item)}
-                  className="btn-view"
-                  title="View full details"
-                >
-                  👁️ View
-                </button>
-                <button 
-                  onClick={() => handleEditClick(item)}
-                  className="btn-edit"
-                >
-                  ✏️ Edit
-                </button>
-                <button 
-                  onClick={() => onDelete(item._id, token)}
-                  className="btn-delete"
-                >
-                  🗑️ Delete
-                </button>
-              </div>
-            </div>
-          ))
-        )}
-      </div>
+            ))
+          )}
+        </div>
+      )}
+
+      {/* Editor Mode - Single Form */}
+      {editorMode && (
+        <div>
+          <div className="form-actions" style={{ marginBottom: '1.5rem' }}>
+            {items.length > 0 ? (
+              <button 
+                onClick={() => {
+                  handleEditClick(items[0])
+                }}
+                className="btn btn-primary"
+                style={{ width: '100%' }}
+              >
+                ✏️ Edit {title}
+              </button>
+            ) : (
+              <button 
+                onClick={handleAddClick}
+                className="btn btn-primary"
+                style={{ width: '100%' }}
+              >
+                + Add {title}
+              </button>
+            )}
+          </div>
+        </div>
+      )}
 
       {/* Expanded View Modal */}
       {expandedItem && (
