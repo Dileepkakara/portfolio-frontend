@@ -1,5 +1,4 @@
 import { useState, useEffect } from 'react'
-import API_BASE_URL from '../../config/api'
 
 const MessageViewer = ({ token }) => {
   const [messages, setMessages] = useState([])
@@ -10,7 +9,7 @@ const MessageViewer = ({ token }) => {
 
   const fetchMessages = async () => {
     try {
-      const response = await fetch(`${API_BASE_URL}/api/messages`, {
+      const response = await fetch('http://localhost:5000/api/messages', {
         headers: { 'Authorization': `Bearer ${token}` }
       })
       const data = await response.json()
@@ -22,13 +21,13 @@ const MessageViewer = ({ token }) => {
 
   const handleDelete = async (id) => {
     if (!window.confirm('Delete this message?')) return
-    
+
     try {
-      const response = await fetch(`${API_BASE_URL}/api/messages/${id}`, {
+      const response = await fetch(`\\\/api/messages/${id}`, {
         method: 'DELETE',
         headers: { 'Authorization': `Bearer ${token}` }
       })
-      
+
       if (!response.ok) throw new Error('Failed to delete')
       fetchMessages()
     } catch (error) {
@@ -39,7 +38,7 @@ const MessageViewer = ({ token }) => {
   return (
     <div className="admin-manager">
       <h3>Messages</h3>
-      
+
       <div className="admin-list">
         {messages.length === 0 ? (
           <p>No messages</p>

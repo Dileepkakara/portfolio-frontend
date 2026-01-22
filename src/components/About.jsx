@@ -1,5 +1,4 @@
 import { useState, useEffect } from 'react'
-import API_BASE_URL from '../config/api'
 
 const About = () => {
   const [about, setAbout] = useState(null)
@@ -9,7 +8,7 @@ const About = () => {
   useEffect(() => {
     const fetchAbout = async () => {
       try {
-        const response = await fetch(`${API_BASE_URL}/api/about`)
+        const response = await fetch('http://localhost:5000/api/about')
         const data = await response.json()
         setAbout(data)
       } catch (error) {

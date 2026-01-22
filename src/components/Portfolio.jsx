@@ -1,5 +1,4 @@
 import { useState, useEffect } from 'react'
-import API_BASE_URL from '../config/api'
 
 const Portfolio = () => {
     const [projects, setProjects] = useState([])
@@ -41,7 +40,7 @@ const Portfolio = () => {
     useEffect(() => {
         const fetchProjects = async () => {
             try {
-                const response = await fetch(`${API_BASE_URL}/api/projects`)
+                const response = await fetch('http://localhost:5000/api/projects')
                 const data = await response.json()
                 // Show database data if available, otherwise show default
                 setProjects(data && data.length > 0 ? data : defaultProjects)
@@ -64,24 +63,12 @@ const Portfolio = () => {
                     <h2>Portfolio</h2>
                 </div>
 
-                <div className="portfolio-project-counter">
-                    <div className="project-numbers">
-                        {projects.map((project, index) => (
-                            <div key={`num-${project._id}`} className="project-number-item">
-                                <span className="project-number">{index + 1}</span>
-                                <span className="project-name">{project.title}</span>
-                            </div>
-                        ))}
-                    </div>
-                </div>
-
                 <div className="portfolio-carousel-wrapper">
                     <div className="carousel-container">
                         <div className="carousel-track-auto">
                             {/* First set of projects */}
                             {projects.map((project, index) => (
                                 <div key={`${project._id}-1`} className="project-card">
-                                    <div className="project-number-badge">{index + 1}</div>
                                     <div className="project-img">
                                         <img src={project.image} alt={project.title} />
                                     </div>
@@ -111,7 +98,6 @@ const Portfolio = () => {
                             {/* Duplicate for seamless loop */}
                             {projects.map((project, index) => (
                                 <div key={`${project._id}-2`} className="project-card">
-                                    <div className="project-number-badge">{index + 1}</div>
                                     <div className="project-img">
                                         <img src={project.image} alt={project.title} />
                                     </div>

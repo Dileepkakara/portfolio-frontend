@@ -1,5 +1,4 @@
 import { useState, useEffect } from 'react'
-import API_BASE_URL from '../config/api'
 
 const Skills = () => {
   const [skills, setSkills] = useState([])
@@ -25,7 +24,7 @@ const Skills = () => {
   useEffect(() => {
     const fetchSkills = async () => {
       try {
-        const response = await fetch(`${API_BASE_URL}/api/skills`)
+        const response = await fetch('\\\/api/skills')
         const data = await response.json()
         // Show database data if available, otherwise show default
         setSkills(data && data.length > 0 ? data : defaultSkills)

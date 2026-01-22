@@ -1,5 +1,4 @@
 import { useState, useEffect } from 'react'
-import API_BASE_URL from '../../config/api'
 import FormBuilder from './FormBuilder'
 
 const AdminPanel = ({ token }) => {
@@ -8,32 +7,19 @@ const AdminPanel = ({ token }) => {
   const [skills, setSkills] = useState([])
   const [about, setAbout] = useState(null)
   const [messages, setMessages] = useState([])
-  const [visitorCount, setVisitorCount] = useState(0)
-  const [selectedProjectId, setSelectedProjectId] = useState(null)
 
   // Fetch data on mount and when tab changes
   useEffect(() => {
-    fetchVisitorCount()
     if (activeTab === 'projects') fetchProjects()
     if (activeTab === 'skills') fetchSkills()
     if (activeTab === 'about') fetchAbout()
     if (activeTab === 'messages') fetchMessages()
   }, [activeTab])
 
-  const fetchVisitorCount = async () => {
-    try {
-      const response = await fetch(`${API_BASE_URL}/api/visitors`)
-      const data = await response.json()
-      setVisitorCount(data.count || 0)
-    } catch (error) {
-      console.error('Error fetching visitor count:', error)
-    }
-  }
-
   // Fetch functions
   const fetchProjects = async () => {
     try {
-      const response = await fetch(`${API_BASE_URL}/api/projects`)
+      const response = await fetch('\\\/api/projects')
       const data = await response.json()
       setProjects(data)
     } catch (error) {
@@ -43,7 +29,7 @@ const AdminPanel = ({ token }) => {
 
   const fetchSkills = async () => {
     try {
-      const response = await fetch(`${API_BASE_URL}/api/skills`)
+      const response = await fetch('\\\/api/skills')
       const data = await response.json()
       setSkills(data)
     } catch (error) {
@@ -53,7 +39,7 @@ const AdminPanel = ({ token }) => {
 
   const fetchAbout = async () => {
     try {
-      const response = await fetch(`${API_BASE_URL}/api/about`)
+      const response = await fetch('\\\/api/about')
       const data = await response.json()
       setAbout(data)
     } catch (error) {
@@ -63,7 +49,7 @@ const AdminPanel = ({ token }) => {
 
   const fetchMessages = async () => {
     try {
-      const response = await fetch(`${API_BASE_URL}/api/messages`, {
+      const response = await fetch('\\\/api/messages', {
         headers: { 'Authorization': `Bearer ${token}` }
       })
       const data = await response.json()
@@ -78,8 +64,8 @@ const AdminPanel = ({ token }) => {
     try {
       const authToken = tokenParam || token
       const url = editId
-        ? `${API_BASE_URL}/api/projects/${editId}`
-        : `${API_BASE_URL}/api/projects`
+        ? `\\\/api/projects/${editId}`
+        : '\\\/api/projects'
       
       const method = editId ? 'PUT' : 'POST'
       
@@ -117,7 +103,7 @@ const AdminPanel = ({ token }) => {
     
     try {
       const authToken = tokenParam || token
-      const response = await fetch(`${API_BASE_URL}/api/projects/${id}`, {
+      const response = await fetch(`\\\/api/projects/${id}`, {
         method: 'DELETE',
         headers: { 'Authorization': `Bearer ${authToken}` }
       })
@@ -138,8 +124,8 @@ const AdminPanel = ({ token }) => {
     try {
       const authToken = tokenParam || token
       const url = editId
-        ? `${API_BASE_URL}/api/skills/${editId}`
-        : `${API_BASE_URL}/api/skills`
+        ? `\\\/api/skills/${editId}`
+        : '\\\/api/skills'
       
       const method = editId ? 'PUT' : 'POST'
       
@@ -168,7 +154,7 @@ const AdminPanel = ({ token }) => {
     
     try {
       const authToken = tokenParam || token
-      const response = await fetch(`${API_BASE_URL}/api/skills/${id}`, {
+      const response = await fetch(`\\\/api/skills/${id}`, {
         method: 'DELETE',
         headers: { 'Authorization': `Bearer ${authToken}` }
       })
@@ -188,7 +174,7 @@ const AdminPanel = ({ token }) => {
   const handleAboutSubmit = async (formData, editId, tokenParam) => {
     try {
       const authToken = tokenParam || token
-      const response = await fetch(`${API_BASE_URL}/api/about`, {
+      const response = await fetch('\\\/api/about', {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -215,7 +201,7 @@ const AdminPanel = ({ token }) => {
     
     try {
       const authToken = tokenParam || token
-      const response = await fetch(`${API_BASE_URL}/api/messages/${id}`, {
+      const response = await fetch(`\\\/api/messages/${id}`, {
         method: 'DELETE',
         headers: { 'Authorization': `Bearer ${authToken}` }
       })
@@ -252,26 +238,18 @@ const AdminPanel = ({ token }) => {
 
   return (
     <div className="admin-content">
-      {/* Visitor Count Header */}
-      <div className="admin-header-stats">
-        <div className="stat-card">
-          <span className="stat-label">👥 Portfolio Visitors</span>
-          <span className="stat-value">{visitorCount}</span>
-        </div>
-      </div>
-
       <div className="admin-tabs">
         <button 
           className={activeTab === 'projects' ? 'tab-active' : ''}
           onClick={() => setActiveTab('projects')}
         >
-          📁 Projects ({projects.length})
+          📁 Projects
         </button>
         <button 
           className={activeTab === 'skills' ? 'tab-active' : ''}
           onClick={() => setActiveTab('skills')}
         >
-          🎯 Skills ({skills.length})
+          🎯 Skills
         </button>
         <button 
           className={activeTab === 'about' ? 'tab-active' : ''}
@@ -283,47 +261,9 @@ const AdminPanel = ({ token }) => {
           className={activeTab === 'messages' ? 'tab-active' : ''}
           onClick={() => setActiveTab('messages')}
         >
-          💬 Messages ({messages.length})
+          💬 Messages
         </button>
       </div>
-
-      {/* Project Count Display */}
-      {activeTab === 'projects' && (
-        <div className="project-count-section">
-          <div className="project-count-header">
-            <h3>Project Navigator</h3>
-            <p>Click on a number to view project details</p>
-          </div>
-          <div className="project-count-grid">
-            {projects.map((project, index) => (
-              <button
-                key={project._id}
-                className={`project-count-btn ${selectedProjectId === project._id ? 'active' : ''}`}
-                onClick={() => setSelectedProjectId(selectedProjectId === project._id ? null : project._id)}
-                title={project.title}
-              >
-                {index + 1}
-              </button>
-            ))}
-          </div>
-          {selectedProjectId && (
-            <div className="project-detail-view">
-              {projects.find(p => p._id === selectedProjectId) && (
-                <div className="project-detail">
-                  <button 
-                    className="close-btn"
-                    onClick={() => setSelectedProjectId(null)}
-                  >
-                    ✕
-                  </button>
-                  <h3>{projects.find(p => p._id === selectedProjectId).title}</h3>
-                  <p>{projects.find(p => p._id === selectedProjectId).description}</p>
-                </div>
-              )}
-            </div>
-          )}
-        </div>
-      )}
 
       {activeTab === 'projects' && (
         <FormBuilder 
