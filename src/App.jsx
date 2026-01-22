@@ -18,7 +18,18 @@ function App() {
   useEffect(() => {
     console.log('🔗 App mounted - API_BASE_URL:', API_BASE_URL);
     window.API_BASE_URL = API_BASE_URL; // Make it globally available
+    
+    // Track visitor when portfolio is visited
+    trackVisitor();
   }, [])
+
+  const trackVisitor = async () => {
+    try {
+      await fetch(`${API_BASE_URL}/api/visitors`);
+    } catch (error) {
+      console.error('Failed to track visitor:', error);
+    }
+  }
 
   // Check if admin page is requested
   useEffect(() => {
