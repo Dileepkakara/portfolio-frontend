@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { API_BASE_URL } from '../config/api'
+import API_BASE_URL from '../config/api'
 
 const Skills = () => {
   const [skills, setSkills] = useState([])
