@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react'
+import API_BASE_URL from './config/api'
 import Navigation from './components/Navigation'
 import Hero from './components/Hero'
 import About from './components/About'
@@ -12,6 +13,23 @@ import './App.css'
 
 function App() {
   const [showAdmin, setShowAdmin] = useState(false)
+
+  // Track visitor count only once per session
+  useEffect(() => {
+    const hasTracked = sessionStorage.getItem('visitorTracked')
+    if (!hasTracked) {
+      trackVisitor()
+      sessionStorage.setItem('visitorTracked', 'true')
+    }
+  }, [])
+
+  const trackVisitor = async () => {
+    try {
+      await fetch(`${API_BASE_URL}/api/visitors`)
+    } catch (error) {
+      console.error('Failed to track visitor:', error)
+    }
+  }
 
   // Check if admin page is requested
   useEffect(() => {

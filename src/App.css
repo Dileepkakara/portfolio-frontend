@@ -1919,3 +1919,156 @@ body.light-mode .message-header strong {
 body.light-mode .message-content p {
     color: var(--text-dark);
 }
+/* Admin Header Stats */
+.admin-header-stats {
+    margin-bottom: 2rem;
+    max-width: 1200px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.stat-card {
+    background: rgba(99, 102, 241, 0.1);
+    border: 1px solid rgba(99, 102, 241, 0.3);
+    border-radius: 0.8rem;
+    padding: 1.5rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+}
+
+.stat-label {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--light);
+}
+
+.stat-value {
+    font-size: 2rem;
+    font-weight: bold;
+    background: linear-gradient(90deg, var(--primary), var(--secondary));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+body.light-mode .stat-label {
+    color: var(--text-dark);
+}
+
+body.light-mode .stat-card {
+    background: rgba(0, 0, 0, 0.05);
+    border-color: rgba(0, 0, 0, 0.1);
+}
+
+/* Project Navigator */
+.project-navigator {
+    background: var(--card-bg);
+    border: 1px solid rgba(99, 102, 241, 0.2);
+    border-radius: 0.8rem;
+    padding: 1.5rem;
+    margin-bottom: 2rem;
+    max-width: 1200px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.project-navigator h3 {
+    color: var(--light);
+    margin-bottom: 1rem;
+    font-size: 1.2rem;
+}
+
+body.light-mode .project-navigator h3 {
+    color: var(--text-dark);
+}
+
+.project-numbers-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.8rem;
+    margin-bottom: 1.5rem;
+}
+
+.project-num-btn {
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    border: 2px solid rgba(99, 102, 241, 0.3);
+    background: transparent;
+    color: var(--primary);
+    font-weight: bold;
+    font-size: 1.1rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.project-num-btn:hover {
+    border-color: var(--primary);
+    background: rgba(99, 102, 241, 0.1);
+    transform: scale(1.1);
+}
+
+.project-num-btn.active {
+    background: linear-gradient(90deg, var(--primary), var(--secondary));
+    color: white;
+    border-color: transparent;
+    box-shadow: 0 4px 15px rgba(99, 102, 241, 0.3);
+}
+
+.project-detail-box {
+    background: rgba(99, 102, 241, 0.05);
+    border: 1px solid rgba(99, 102, 241, 0.3);
+    border-radius: 0.6rem;
+    padding: 1.2rem;
+    position: relative;
+}
+
+.project-detail {
+    position: relative;
+    padding-top: 1.5rem;
+}
+
+.project-detail .close-btn {
+    position: absolute;
+    top: 0.5rem;
+    right: 0.5rem;
+    background: none;
+    border: none;
+    color: var(--primary);
+    font-size: 1.5rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    padding: 0;
+    width: 30px;
+    height: 30px;
+}
+
+.project-detail .close-btn:hover {
+    transform: rotate(90deg);
+    color: var(--secondary);
+}
+
+.project-detail h4 {
+    color: var(--primary);
+    margin-bottom: 0.8rem;
+    font-size: 1.1rem;
+}
+
+body.light-mode .project-detail h4 {
+    color: var(--secondary);
+}
+
+.project-detail p {
+    color: var(--text-light);
+    line-height: 1.6;
+    margin: 0;
+}
+
+body.light-mode .project-detail p {
+    color: var(--text-dark);
+}
