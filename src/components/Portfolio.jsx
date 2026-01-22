@@ -1,9 +1,10 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import API_BASE_URL from '../config/api'
 
 const Portfolio = () => {
     const [projects, setProjects] = useState([])
     const [loading, setLoading] = useState(true)
+    const carouselRef = useRef(null)
 
     // Default projects (fallback if database is empty)
     const defaultProjects = [
@@ -57,6 +58,17 @@ const Portfolio = () => {
         fetchProjects()
     }, [])
 
+    const scrollCarousel = (direction) => {
+        if (carouselRef.current) {
+            const scrollAmount = 320; // project-card width + gap
+            if (direction === 'left') {
+                carouselRef.current.scrollBy({ left: -scrollAmount, behavior: 'smooth' })
+            } else {
+                carouselRef.current.scrollBy({ left: scrollAmount, behavior: 'smooth' })
+            }
+        }
+    }
+
     return (
         <section id="portfolio">
             <div className="section-container">
@@ -65,7 +77,10 @@ const Portfolio = () => {
                 </div>
 
                 <div className="portfolio-carousel-wrapper">
-                    <div className="carousel-container">
+                    <button className="carousel-btn carousel-btn-prev" onClick={() => scrollCarousel('left')} title="Previous">
+                        <i className="fas fa-chevron-left"></i>
+                    </button>
+                    <div className="carousel-container" ref={carouselRef}>
                         <div className="carousel-track-auto">
                             {/* First set of projects */}
                             {projects.map((project, index) => (
@@ -127,6 +142,9 @@ const Portfolio = () => {
                             ))}
                         </div>
                     </div>
+                    <button className="carousel-btn carousel-btn-next" onClick={() => scrollCarousel('right')} title="Next">
+                        <i className="fas fa-chevron-right"></i>
+                    </button>
                 </div>
             </div>
         </section>
