@@ -29,7 +29,7 @@ const About = () => {
   const defaultPhone = '+91 9182681959'
   const defaultLocation = 'Visakhapatnam, India'
   const defaultEducation = 'B-Tech in Computer Science Engineering'
-  const defaultCvLink = 'https://drive.google.com/file/d/1ragQaArB1p3j89GW3oqwuCVv9izXOZWI/view?usp=drivesdk'
+  const defaultCvLink = 'https://drive.google.com/file/d/1tgsOdNs7RF-Nu3fuIScIj4SzX_jufCht/view?usp=drivesdk'
 
   const profilePhoto = about?.profilePhoto || defaultProfilePhoto
   const dateOfBirth = about?.dateOfBirth || defaultDateOfBirth
